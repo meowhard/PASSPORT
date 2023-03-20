@@ -3,7 +3,6 @@ import java.io.*;
 class Human implements Externalizable {
     private String name;
     private String passportNumber;
-    private final int divider = 10;
 
     public Human() {
     }
@@ -22,6 +21,7 @@ class Human implements Externalizable {
     }
 
     private int[] numberToArray(String passportNumber) {
+
         int[] intArr = new int[passportNumber.length()];
         String[] strArr = passportNumber.split("");
 
@@ -35,7 +35,7 @@ class Human implements Externalizable {
         StringBuilder encryptedNumber = new StringBuilder();
 
         for (int i = 0; i < arr.length - 1; i++) {
-            encryptedNumber.append((arr[i] + arr[i + 1]) % divider);
+            encryptedNumber.append((arr[i] + arr[i + 1]) % 10);
         }
         encryptedNumber.append(arr[arr.length - 1]);
         return encryptedNumber.toString();
@@ -43,13 +43,18 @@ class Human implements Externalizable {
 
     private String decryptPassportNumber(int[] arr) {
         StringBuilder decryptedNumber = new StringBuilder();
-// TODO: логика в этом методе нерабочее говно, надо как то переделать
+
+        int memory = arr[arr.length - 1];
+        decryptedNumber.append(memory);
 
         for (int i = arr.length - 1; i > 0; i--) {
-            decryptedNumber.append(arr[i - 1] + divider - arr[i]);
+            memory = arr[i - 1] - memory;
+            if (memory < 0) {
+                memory += 10;
+            }
+            decryptedNumber.append(memory);
         }
         decryptedNumber.reverse();
-        decryptedNumber.append(arr[arr.length - 1]);
         return decryptedNumber.toString();
     }
 

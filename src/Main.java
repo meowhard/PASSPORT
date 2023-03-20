@@ -3,7 +3,7 @@ import java.io.*;
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("serialized.txt"));
-        Human human = new Human("Антон", "987654");
+        Human human = new Human("Антон", "5411564");
 
         oos.writeObject(human);
         oos.close();
